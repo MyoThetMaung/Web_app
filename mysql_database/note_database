@@ -1,0 +1,49 @@
+Limit and Offset
+
+1. select * from students limit 3
+2. select * from students limit 3 offset 10
+3. select * from students limit 10,20
+
+Condition
+1. SELECT * FROM students WHERE weight>70 AND gender="female" AND birthday<"2000-1-1"
+2. SELECT * FROM students WHERE id = 10 OR id=20
+3. SELECT * FROM students WHERE id != 1
+4. SELECT * FROM students WHERE weight BETWEEN 70 AND 80
+5. SELECT * FROM students WHERE id IN (1,2,3,4)
+6. SELECT * FROM students WHERE email LIKE "%.com"    
+7. SELECT * FROM students WHERE name LIKE "A%"       
+8. SELECT * FROM students ORDER BY name DESC
+
+Analysis
+1. SELECT COUNT(id) AS total FROM students
+2. SELECT *,MAX(weight) AS maximun_weight FROM students 
+3. SELECT AVG(weight) AS average_weight FROM students
+4. SELECT SUM(weight) AS sum_weight FROM students
+5. SELECT 2021-YEAR(birthday) AS age FROM students 
+6. UPDATE students SET random = RAND()
+7. SELECT floor(weight) FROM students 
+8. SELECT ceil(weight) FROM students
+9. SELECT COUNT(gender) AS total_gender, gender FROM students GROUP BY gender
+
+SQL JOIN
+1. SELECT * FROM township INNER JOIN state_division ON township.state_division_id = state_division.id
+2. SELECT * FROM township LEFT JOIN state_division ON township.state_division_id = state_division.id
+3. SELECT * FROM township RIGHT JOIN state_division ON township.state_division_id = state_division.id
+
+Sub Query
+1. SELECT * FROM township WHERE state_division_id = (SELECT id FROM state_division WHERE name = 'Yangon')
+2. SELECT * FROM students WHERE township_id IN (SELECT id FROM township WHERE state_division_id = (SELECT id FROM state_division 
+                                                                                              WHERE name = 'yangon'))
+
+Create DATABASE
+CREAETE DATABASE <database name>
+
+Create TABLE
+CREATE TABLE aa(
+    id int(3) AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50)
+    )
+
+Adding COLUMN
+ALTER TABLE aa ADD university varchar(40) AFTER age
+
