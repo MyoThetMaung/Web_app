@@ -2,7 +2,6 @@
 <?php include "template/header.php"; ?>
 
 
-
 <div class="row">
     <div class="col-12">
         <nav aria-label="breadcrumb">
@@ -29,17 +28,9 @@
                 <hr>
                 
                 <?php
-                    if(isset($_GET['addBtn'])){
-
-                        $message = $_GET['message'];
-                        $sql = "INSERT INTO to_do (message) VALUES ('$message')";
-                        $query = mysqli_query($connection, $sql);
-                        if($query){
-                            echo "<script>location.href='category_create.php'</script>";
-                        }else{
-                            echo "connection fail";
-                        }
-                    }
+                   if(isset($_GET['addBtn'])){
+                       category_create();   
+                }
                 ?>
 
                 <form action="" method="get">

@@ -1,6 +1,7 @@
 
 <?php include "template/header.php"; ?>
 
+
 <link rel="stylesheet" href="<?php echo $url; ?>/assets/vendor/data_table/dataTables.bootstrap4.min.css">
 
 <div class="row">
@@ -43,11 +44,10 @@
                         
                     <tbody>
                         <?php
-                            $sql = "SELECT * FROM to_do ORDER BY id DESC";
-                            $query = mysqli_query($connection,$sql);
-
-                            while( $row = mysqli_fetch_assoc($query)){
+                            
+                            foreach (category_list() as $row) {
                                 $time = date(strtotime($row['created_at']));
+            
                         ?>
 
                         <tr>
@@ -64,7 +64,6 @@
                             }
                         
                         ?>
-
 
                     </tbody>
                 </table>

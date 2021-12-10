@@ -29,26 +29,10 @@
                 <hr>
                 <?php
 
+                   $row = category_only_one_list($_GET['id']);
 
-                    $id = $_GET['id'];
-                    $sql = "SELECT * FROM to_do WHERE id =$id";
-                    $query = mysqli_query($connection,$sql);
-                    $row  = mysqli_fetch_assoc($query);
-
-
-                    if(isset($_GET['update'])){
-
-                        $id  = $_GET['id'];
-                        $message = $_GET['message'];
-
-                        $sql = "UPDATE to_do SET message='$message' WHERE id = $id";
-                        $query = mysqli_query($connection,$sql);
-                        if($query){
-                            echo "<script>location.href='category_list.php'</script>";
-                        }
-                        else{
-                            echo "update error!";
-                        }
+                    if (isset($_GET['update'])) {
+                        category_update();
                     }
                 ?>
 

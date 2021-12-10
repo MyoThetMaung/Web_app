@@ -6,4 +6,4 @@ $info = array(
   "description" => "နည်းပညာ အခက်အခက်အခဲများ အတွက် MMS IT မှ ကူညီပေးလျှက်ရှိပါတယ်။ လူကြီးမင်းတို့၏ စီးပွာရေး လုပ်ငန်းများကိုနည်းပညာဖြင့် အဆင့်မြှင့်တင်နိုင်ဖို့ အခုပဲ ဆက်သွယ်လိုက်ပါ။",
 );
 
-$url = "http://{$_SERVER['HTTP_HOST']}/web_app/Project_two/blog";
+$url = "http://{$_SERVER['HTTP_HOST']}/web_app/Blog With Admin Dashboard Project";
