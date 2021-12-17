@@ -43,9 +43,10 @@ function alert($data, $color='danger'){
         return date($format,strtotime($time_stamp));                             //time_stamp function format
     }
 
-    function count_total($table){
-        $sql = "SELECT COUNT(id) AS total FROM $table";
-        return fetch_one($sql)['total'];
+    function count_total($table,$condition=1){
+        $sql = "SELECT COUNT(id) FROM $table WHERE $condition";
+        $total = fetch_one($sql);
+        return $total['COUNT(id)'];
     }
 
     function short_text($string, $length="50"){
@@ -58,6 +59,8 @@ function alert($data, $color='danger'){
         $text = stripslashes($text);
         return $text;
     }
+
+   
 
 //common end
 
@@ -149,7 +152,7 @@ function alert($data, $color='danger'){
 
     function categories(){
 
-        $sql = "SELECT * FROM category";
+        $sql = "SELECT * FROM category ORDER BY ordering DESC";
         return fetch_all($sql);
     }
 
@@ -165,6 +168,22 @@ function alert($data, $color='danger'){
         $title = $_POST['title'];
         $sql = "UPDATE category SET title = '$title' WHERE id = $user_id ";
         return run_query($sql);
+    }
+
+    function category_pin_to_top($id){                                                      //pin to category
+
+        $sql = "UPDATE category SET ordering= '0'";
+        mysqli_query(connection(),$sql);
+
+        $sql = "UPDATE category SET ordering = '1' WHERE id = $id ";
+        return run_query($sql);
+    }
+
+    function category_remove_pin(){                                                          //remove pin
+
+        $sql = "UPDATE category SET ordering= '0'";
+        return run_query($sql);
+       
     }
 
 //category end
@@ -193,13 +212,13 @@ function alert($data, $color='danger'){
         
     }
 
-    function posts(){
+    function posts($limit = 99999){
         
         if($_SESSION['user']['role'] == 2){
             $current_user_id = $_SESSION['user']['id'];
-            $sql = "SELECT * FROM posts WHERE user_id = '$current_user_id'";
+            $sql = "SELECT * FROM posts WHERE user_id = '$current_user_id' LIMIT $limit";
         }else{
-            $sql = "SELECT * FROM posts";
+            $sql = "SELECT * FROM posts LIMIT $limit";
         }
   
         return fetch_all($sql);
@@ -221,5 +240,143 @@ function alert($data, $color='danger'){
     }
 
 
-
 //post end
+
+//front panel start
+
+    function panel_posts($order_column = "id", $order_type = "DESC"){
+        
+       $sql = "SELECT * FROM posts ORDER BY $order_column $order_type";
+       return fetch_all($sql);
+    
+    }
+
+    
+    function panel_categories(){
+
+        $sql = "SELECT * FROM category ORDER BY ordering DESC";
+        return fetch_all($sql);
+    }
+
+
+    function post_by_category($category_id, $limit="99999",$post_id=0){
+
+        $sql = "SELECT * FROM posts WHERE category_id = $category_id AND id != $post_id ORDER BY id DESC LIMIT $limit";
+        return fetch_all($sql);   
+
+    }
+
+    function search_key ($key){
+        
+        $sql = "SELECT * FROM posts WHERE title LIKE '%$key%' OR description LIKE '%$key%' ORDER BY id DESC";       //checking search key exits in title or description
+        return fetch_all($sql);
+    }
+
+    function search_by_date ($start,$end){
+        
+        $sql = "SELECT * FROM posts WHERE created_at BETWEEN '$start' AND '$end' ORDER BY id DESC";                  //filtering posts by date 
+        return fetch_all($sql);
+    }
+//front panel end
+
+
+//viewer count start
+
+    function viewer_record($user_id,$post_id,$device){
+
+        $sql = "INSERT INTO viewers (user_id,post_id,device) VALUES ('$user_id','$post_id','$device')";
+        run_query($sql);
+    }
+
+    function viewer_count_by_post($post_id){
+        $sql = "SELECT * FROM viewers WHERE post_id = '$post_id'";
+        return fetch_all($sql);
+    }
+    
+    function viewer_count_by_user($user_id){
+        $sql = "SELECT * FROM viewers WHERE user_id = $user_id";
+        return fetch_all($sql);
+    }
+
+//viewer count end\
+
+
+
+//ads start
+
+    function ads(){
+        $today = date("Y-m-d");
+        $sql = "SELECT * FROM ads WHERE start <= '$today' AND end >= '$today'";
+        return fetch_all($sql);      
+    }
+
+//ads end
+
+
+//payment start
+
+    function paynow(){
+
+        $to_user = $_POST['to_user'];
+        $from_user = $_SESSION['user']['id'];
+        $amount = $_POST['amount'];
+        $description = $_POST['description'];
+        
+        //from user money update
+        $from_user_detail = user($from_user);
+        if($from_user_detail['money'] >= $amount){
+            
+            $left_money = $from_user_detail['money'] - $amount;
+            $sql = "UPDATE users SET money = '$left_money' WHERE id = $from_user";
+            mysqli_query(connection(),$sql);
+    
+            //to user money update
+            $to_user_detail = user($to_user);
+            $new_money = $to_user_detail['money'] + $amount;
+            $sql = "UPDATE users SET money = '$new_money' WHERE id = $to_user";
+            mysqli_query(connection(),$sql);
+    
+            //add to transition table
+            $sql = "INSERT INTO transition(from_user,to_user,amount,description) VALUES ('$from_user','$to_user','$amount','$description')";
+            run_query($sql);
+        }
+
+    }
+
+    function transition($id){
+
+        $sql = "SELECT * FROM transition WHERE id=$id";
+        return fetch_one($sql);
+        
+    }
+
+    function transitions(){
+        $userId = $_SESSION['user']['id'];
+        if ($_SESSION['user']['role'] == 0) {
+            $sql = "SELECT * FROM transition";
+        }else{
+            $sql = "SELECT * FROM transition WHERE from_user=$userId OR to_user=$userId";             //checking admin or user to see transition
+        }
+        return fetch_all($sql);
+    }
+
+
+//payment end
+
+
+//admin dashboard start
+
+    function dashboard_posts($limit = 99999){
+        
+        if($_SESSION['user']['role'] == 2){
+            $current_user_id = $_SESSION['user']['id'];
+            $sql = "SELECT * FROM posts WHERE user_id = '$current_user_id' ORDER BY id DESC LIMIT $limit";
+        }else{
+            $sql = "SELECT * FROM posts LIMIT $limit";
+        }
+
+        return fetch_all($sql);
+    }
+
+
+//admin dashbard end

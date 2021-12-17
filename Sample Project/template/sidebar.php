@@ -2,9 +2,9 @@
     <div class="d-flex justify-content-between align-items-center py-2 mt-3 nav-brand">
         <div class="d-flex align-items-center">
                     <span class="bg-primary p-2 rounded d-flex justify-content-center align-items-center mr-2">
-                        <i class="feather-shopping-bag text-white h4 mb-0"></i>
+                        <i class="feather-shopping-bag text-white h5 mb-0"></i>
                     </span>
-            <span class="font-weight-bolder h4 mb-0 text-uppercase text-primary">My Shop</span>
+            <span class="font-weight-bolder h4 mb-0 text-uppercase text-brown">Honey Bunny</span>
         </div>
         <button class="hide-sidebar-btn btn btn-light d-block d-lg-none">
             <i class="feather-x text-primary" style="font-size: 2em;"></i>
@@ -20,7 +20,24 @@
                     </span>
                 </a>
             </li>
-            <li class="menu-spacer"></li>
+
+            <li class="menu-item">
+                <a href="<?php echo $url; ?>/index.php" class="menu-item-link ">
+                    <span>
+                        <i class="feather-arrow-right-circle"></i>
+                        Go to News 
+                    </span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="<?php echo $url; ?>/wallet.php" class="menu-item-link ">
+                    <span>
+                        <i class="feather-dollar-sign"></i>
+                        Wallet
+                    </span>
+                </a>
+            </li>
 
 
             <li class="menu-title">
@@ -104,7 +121,7 @@
             
 
             <li class="menu-item">
-                <a href="<?php echo $url; ?>/logout.php" class="btn btn-primary w-100">                    
+                <a href="<?php echo $url; ?>/logout.php" class="btn btn-secondary w-100">                    
                     <i class="feather-lock"></i>Logout              
                 </a>
             </li>

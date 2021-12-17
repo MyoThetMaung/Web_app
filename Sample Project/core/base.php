@@ -19,3 +19,5 @@ $role = ['Admin','Editor','User'];
 
 $url = "http://{$_SERVER['HTTP_HOST']}/web_app/Sample Project";
 
+date_default_timezone_set("Asia/Yangon");
+

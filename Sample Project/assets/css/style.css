@@ -11,9 +11,7 @@
     top: 0;
     background: var(--light);
 }
-.nav-menu{
 
-}
 .nav-menu ul{
     list-style-type: none;
     margin:0;
@@ -46,15 +44,6 @@
 .menu-item-link:hover{
     text-decoration: none;
     color: var(--dark);
-}
-
-
-.menu-item-link span{
-
-}
-
-.menu-item-link i{
-
 }
 
 .menu-spacer{
@@ -141,6 +130,14 @@
 
 }
 
+.post{
+    transition: 0.5s;
+}
+
+.post:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 0.325rem 0.75rem rgba(0,0,0,0.075);
+}
 
 @media screen and (max-width: 780px){
     .sidebar{

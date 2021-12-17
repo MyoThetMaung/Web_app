@@ -41,6 +41,7 @@
                 <?php if($_SESSION['user']['role'] == 0){   ?>
                     <th>User</th>                                                                               <!--if user is admin, this will show-->
                 <?php } ?>
+                <th>Viewer count</th>
                 <th>Control</th>
                 <th>Created_at</th>
             </tr>
@@ -57,7 +58,9 @@
                 <?php if($_SESSION['user']['role'] == 0){   ?>
                     <td><?php echo user($post['user_id'])['username']; ?></td>                                   <!--if user is admin, this will show-->
                 <?php } ?>    
-                
+                <td>
+                    <?php echo count(viewer_count_by_post($post['id'])); ?>
+                </td>
                 <td>
                     <a href="post_detail.php?id=<?php echo $post['id']; ?>" class="btn btn-outline-info btn-sm"><i class="feather-info fa-fw"></i>Post detail</a>
                     

@@ -81,6 +81,6 @@
     $("#description").summernote({
         placeholder: 'Write Description',
         tabsize : 2,                                                            //summernote is for long text <see in summernote.com>
-        height : 500
+        height : 500,
     });
 </script>
