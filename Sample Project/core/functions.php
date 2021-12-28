@@ -380,3 +380,14 @@ function alert($data, $color='danger'){
 
 
 //admin dashbard end
+
+
+//api start 
+
+    function api_output($data){
+
+        echo json_encode($data);
+    }
+
+
+//api end
