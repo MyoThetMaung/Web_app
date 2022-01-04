@@ -379,7 +379,7 @@ function alert($data, $color='danger'){
     }
 
 
-//admin dashbard end
+//admin dashboard end
 
 
 //api start 
@@ -391,3 +391,5 @@ function alert($data, $color='danger'){
 
 
 //api end
+
+
